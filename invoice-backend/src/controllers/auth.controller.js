@@ -3,11 +3,17 @@ const jwt = require('jsonwebtoken');
 const LoginModel = require('../models/login');
 
 exports.register = async (req, res) => {
+  try{
   const { userName, password } = req.body;
   const hash = await bcrypt.hash(password, 10);
   await LoginModel.create({ userName: userName, password: hash });
   res.json({ message: 'Registered' });
   console.log('Registered');
+  } catch (err) {
+    if (err.name === 'ZodError') return res.status(400).json({ message: 'Validation failed', errors: err.issues });
+    if (err.code === 11000) return res.status(400).json({ message: 'Username already exists' });
+    return res.status(500).json({ message: 'Server error' });
+  }
 };
 
 
