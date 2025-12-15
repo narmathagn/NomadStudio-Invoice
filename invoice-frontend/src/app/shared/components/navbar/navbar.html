@@ -1,0 +1,19 @@
+<header class="header">
+    <div class="nav-inner">
+        <!-- Hamburger (Mobile only) -->
+        <button class="menu-toggle" type="button" (click)="toggleSidebar.emit()">
+            ☰
+        </button>
+
+        <!-- Logo + Studio Name -->
+        <a routerLink="/dashboard" class="logo">
+            <img src="/assets/logo.png" alt="Nomad Studio" />
+            <span class="studio-name">Nomad Studio</span>
+        </a>
+
+        <!-- Logout (Desktop only) -->
+        <a routerLink="/logout" routerLinkActive="active" class="nav-logout desktop-only">
+            Logout
+        </a>
+    </div>
+</header>
