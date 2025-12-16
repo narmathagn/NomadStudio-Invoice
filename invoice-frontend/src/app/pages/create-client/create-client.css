@@ -1,0 +1,88 @@
+/* Container */
+.form-wrapper {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px 25px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Title */
+.form-wrapper h2 {
+    text-align: center;
+    color: #6b4226;
+    /* brown shade like invoice title */
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* Labels */
+.form-wrapper label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #333;
+    font-size: 14px;
+}
+
+/* Inputs & Textarea */
+.form-wrapper input,
+.form-wrapper textarea {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 18px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+/* Focus effect */
+.form-wrapper input:focus,
+.form-wrapper textarea:focus {
+    outline: none;
+    border-color: #6b4226;
+    /* same brown as title */
+    box-shadow: 0 0 5px rgba(107, 66, 38, 0.3);
+}
+
+/* Textarea styling */
+.form-wrapper textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Button */
+.form-wrapper button {
+    width: 100%;
+    padding: 12px;
+    background-color: #6b4226;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Button hover */
+.form-wrapper button:hover {
+    background-color: #52311d;
+}
+
+/* Disabled button */
+.form-wrapper button:disabled {
+    background-color: #bfa48d;
+    cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .form-wrapper {
+        padding: 20px 15px;
+    }
+}
