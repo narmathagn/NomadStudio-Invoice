@@ -6,6 +6,8 @@ import { Dashboard } from './pages/dashboard/dashboard';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MainLayout } from './layout/main-layout/main-layout';
+import { CreateInvoice } from './pages/create-invoice/create-invoice';
+import { InvoiceList } from './pages/invoice-list/invoice-list';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -14,14 +16,14 @@ export const routes: Routes = [
     path: '',
     component: MainLayout,
     children: [
-      { path: 'dashboard', component: Dashboard }
+      { path: 'dashboard', component: Dashboard },
 
       // add more pages here later
       // { path: 'clients', component: ClientsComponent }
-      // { path: 'invoices', component: InvoicesComponent }
+      { path: 'invoices', component: CreateInvoice },
+      {  path: 'listinvoices',  component: InvoiceList}
     ]
   },
-
 ];
 
 @NgModule({

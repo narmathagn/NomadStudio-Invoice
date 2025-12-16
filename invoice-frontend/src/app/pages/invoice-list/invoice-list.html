@@ -1,0 +1,41 @@
+<div class="invoice-list-container">
+
+  <h2 class="page-title">Invoice List</h2>
+
+  <div class="table-wrapper">
+    <table class="invoice-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Client Name</th>
+          <th>Phone</th>
+          <th>Services</th>
+          <th>Total Amount</th>
+          <th>Created Date</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let invoice of invoices; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td class="client-name">{{ invoice.userName }}</td>
+          <td>{{ invoice.phoneNumber }}</td>
+          <td>
+            <ul class="service-list">
+              <li *ngFor="let s of invoice.services">
+                {{ s.serviceType }}
+              </li>
+            </ul>
+          </td>
+          <td class="amount">₹ {{ invoice.totalAmount }}</td>
+          <td>{{ invoice.createdAt | date:'dd MMM yyyy' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="invoices.length === 0" class="empty">
+    No invoices found
+  </div>
+
+</div>

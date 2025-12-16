@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,5 +10,11 @@ import { RouterModule } from '@angular/router';
 export class Sidebar {
 
   @Output() close = new EventEmitter<void>();
+constructor(private router: Router) {}
 
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['/login']);
+  }
 }
+

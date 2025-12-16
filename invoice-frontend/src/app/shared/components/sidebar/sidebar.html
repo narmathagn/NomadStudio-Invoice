@@ -1,10 +1,13 @@
 <aside class="sidebar">
     <ul>
         <li>
-            <a routerLink="/dashboard" routerLinkActive="active">Invoice</a>
+            <a routerLink="/income-expenses" routerLinkActive="active">Overview</a>
         </li>
         <li>
-            <a routerLink="/invoice-list" routerLinkActive="active">Invoice List</a>
+            <a routerLink="/invoices" routerLinkActive="active">Invoice</a>
+        </li>
+        <li>
+            <a routerLink="/listinvoices" routerLinkActive="active">Invoice List</a>
         </li>
         <li>
             <a routerLink="/add-client" routerLinkActive="active">Add New Client</a>
@@ -13,14 +16,13 @@
             <a routerLink="/clients" routerLinkActive="active">Client Details</a>
         </li>
         <li>
-            <a routerLink="/income-expenses" routerLinkActive="active">Income & Expenses</a>
-        </li>
-        <li>
-            <a routerLink="/support" routerLinkActive="active">Support</a>
+            <a routerLink="/support" routerLinkActive="active">Get Support</a>
         </li>
     </ul>
     <!-- Logout appears ONLY on mobile -->
     <div class="mobile-only logout-wrapper">
-        <a routerLink="/logout" class="sidebar-logout" routerLinkActive="active" (click)="close.emit()">Logout</a>
-    </div>
+        <button type="button" (click)="logout()" class="nav-logout desktop-only">
+  Logout
+</button>
+ </div>
 </aside>

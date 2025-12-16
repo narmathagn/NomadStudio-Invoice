@@ -6,9 +6,16 @@ module.exports = mongoose.model(
     {
       userName: { type: String, required: true },
       phoneNumber: { type: String },
-      serviceType: { type: String },
-      amountCharged: { type: Number, required: true },
-      notes: { type: String },
+       // Array of service objects with individual pricing
+      services: [
+        {
+          serviceType: { type: String, required: true },
+          notes: { type: String },
+          amountCharged: { type: Number, required: true },
+          
+        }
+      ],
+       totalAmount: { type: Number },
 
       ownerDetails: {
         companyName: { type: String },
