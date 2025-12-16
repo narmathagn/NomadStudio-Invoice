@@ -1,7 +1,8 @@
-/* Container */
+/* Form Container */
 .form-wrapper {
     max-width: 500px;
-    margin: 40px auto;
+    margin: 40px auto 20px;
+    /* reduced vertical centering (top margin 40px, bottom 20px) */
     padding: 30px 25px;
     background-color: #fff;
     border-radius: 12px;
@@ -9,31 +10,26 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Title */
-.form-wrapper h2 {
-    text-align: center;
-    color: #6b4226;
-    /* brown shade like invoice title */
-    margin-bottom: 25px;
-    font-size: 24px;
-    font-weight: 600;
+/* Each form row */
+.form-wrapper .row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
 }
 
 /* Labels */
 .form-wrapper label {
-    display: block;
     margin-bottom: 6px;
     font-weight: 500;
     color: #333;
     font-size: 14px;
 }
 
-/* Inputs & Textarea */
+/* Inputs and Textarea */
 .form-wrapper input,
 .form-wrapper textarea {
     width: 100%;
     padding: 10px 12px;
-    margin-bottom: 18px;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 14px;
@@ -45,19 +41,27 @@
 .form-wrapper textarea:focus {
     outline: none;
     border-color: #6b4226;
-    /* same brown as title */
     box-shadow: 0 0 5px rgba(107, 66, 38, 0.3);
 }
 
-/* Textarea styling */
+/* Textarea resize & min height */
 .form-wrapper textarea {
     resize: vertical;
     min-height: 80px;
 }
 
-/* Button */
+/* Button row container */
+.form-wrapper .button-row {
+    display: flex;
+    gap: 10px;
+    /* space between buttons */
+    margin-top: 15px;
+}
+
+/* Buttons */
 .form-wrapper button {
-    width: 100%;
+    flex: 1;
+    /* buttons take equal width */
     padding: 12px;
     background-color: #6b4226;
     color: #fff;
@@ -80,9 +84,24 @@
     cursor: not-allowed;
 }
 
-/* Responsive */
+/* Secondary button */
+.form-wrapper button.secondary {
+    background-color: #ccc;
+    color: #333;
+}
+
+.form-wrapper button.secondary:hover {
+    background-color: #b3b3b3;
+}
+
+/* Responsive adjustments */
 @media (max-width: 600px) {
     .form-wrapper {
         padding: 20px 15px;
+    }
+
+    .form-wrapper .button-row {
+        flex-direction: column;
+        /* stack buttons on small screens */
     }
 }

@@ -9,6 +9,7 @@ import { MainLayout } from './layout/main-layout/main-layout';
 import { CreateInvoice } from './pages/create-invoice/create-invoice';
 import { InvoiceList } from './pages/invoice-list/invoice-list';
 import { CreateClient } from './pages/create-client/create-client';
+import { Clients } from './pages/clients/clients';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -23,7 +24,8 @@ export const routes: Routes = [
       // { path: 'clients', component: ClientsComponent }
       { path: 'invoices', component: CreateInvoice },
       { path: 'listinvoices', component: InvoiceList },
-      { path: 'addclient', component: CreateClient }
+      { path: 'addclient', component: CreateClient },
+      { path: 'clients', component: Clients }
     ]
   },
 ];

@@ -21,20 +21,21 @@ export class CreateClient {
   };
   loading = false;
 
-  constructor(private clientService: Client) { }
+  constructor(private clientService: Client, private router: Router) { }
 
   saveClient() {
     this.loading = true;
-    this.clientService.createClient(this.client)
-      .then(() => {
+    this.clientService.createClient(this.client).subscribe({
+      next: () => {
         alert('Client saved successfully');
         this.loading = false;
-        this.resetClient();
-      })
-      .catch(() => {
+        this.resetClient();  // if you have a method to clear the form
+      },
+      error: () => {
         alert('Failed to save client');
-        this.loading = false
-      });
+        this.loading = false;
+      }
+    });
   }
 
   resetClient() {
@@ -46,5 +47,9 @@ export class CreateClient {
     };
   }
 
+  viewAllClients() {
+    // Navigate to the clients list page
+    this.router.navigate(['/clients']); // adjust path as per your routing
+  }
 
 }

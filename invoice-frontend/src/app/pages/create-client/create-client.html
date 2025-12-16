@@ -13,13 +13,16 @@
         <input type="email" name="emailId" [(ngModel)]="client.emailId" placeholder="Enter email address" />
 
         <label>Address</label>
-        <textarea name="address" [(ngModel)]="client.address" placeholder="Enter address">
-    </textarea>
+        <textarea name="address" [(ngModel)]="client.address" placeholder="Enter address"></textarea>
 
-        <button type="submit" [disabled]="clientForm.invalid || loading">
-            {{ loading ? 'Saving...' : 'Add Client' }}
-        </button>
-
-
+        <!-- Buttons side by side -->
+        <div class="button-row">
+            <button type="submit" [disabled]="clientForm.invalid || loading">
+                {{ loading ? 'Saving...' : 'Add Client' }}
+            </button>
+            <button type="button" class="secondary" (click)="viewAllClients()">
+                View All Clients
+            </button>
+        </div>
     </form>
 </div>
