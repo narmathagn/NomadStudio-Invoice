@@ -1,105 +1,129 @@
 <div class="invoice-container">
+  <div class="invoice-card">
 
-  <h2 class="title">Create Invoice</h2>
+    <h2 class="title">Create Invoice</h2>
 
-  <div class="main-layout">
-    <!-- Left Side: Client Details -->
-    <div class="left-section">
-      <div class="row">
-        <label>Client Name</label>
-        <input type="text" [(ngModel)]="invoice.userName" placeholder="Enter client name" />
+    <!-- Top Section -->
+    <div class="main-layout">
+
+      <!-- Client Details -->
+      <div class="left-section">
+        <div class="row">
+          <label>Client Name</label>
+          <input
+            type="text"
+            [(ngModel)]="invoice.userName"
+            placeholder="Enter client name"
+          />
+        </div>
+
+        <div class="row">
+          <label>Phone Number</label>
+          <input
+            type="text"
+            [(ngModel)]="invoice.phoneNumber"
+            placeholder="Enter phone number"
+          />
+        </div>
       </div>
 
-      <div class="row">
-        <label>Phone Number</label>
-        <input type="text" [(ngModel)]="invoice.phoneNumber" placeholder="Enter phone number" />
+      <!-- Owner Details -->
+      <div class="right-section">
+        <div class="owner-box">
+          <h4>Owner Details</h4>
+          <p><strong>{{ invoice.ownerDetails.companyName }}</strong></p>
+          <p>{{ invoice.ownerDetails.address }}</p>
+          <p>Phone: {{ invoice.ownerDetails.phoneNumber }}</p>
+        </div>
       </div>
     </div>
 
-    <!-- Right Side: Owner Details -->
-    <div class="right-section">
-      <div class="owner-box">
-        <h4>Owner Details</h4>
-        <p><strong>{{ invoice.ownerDetails.companyName }}</strong></p>
-        <p>{{ invoice.ownerDetails.address }}</p>
-        <p>Phone: {{ invoice.ownerDetails.phoneNumber }}</p>
+    <!-- Item List -->
+    <div class="service-section">
+      <h3 class="section-title">Item List</h3>
+
+      <div
+        class="service-row"
+        *ngFor="let service of invoice.services; let i = index"
+      >
+        <select [(ngModel)]="service.serviceType">
+          <option value="">Select Service</option>
+          <option>Wedding Photography</option>
+          <option>Videography</option>
+          <option>Drone Shots</option>
+          <option>Album Design</option>
+          <option>Frame Order</option>
+          <option>Pre-Wedding Shoot</option>
+        </select>
+
+        <input
+          type="number"
+          placeholder="Qty"
+          [(ngModel)]="service.quantity"
+          (input)="recalculate()"
+        />
+
+        <input
+          type="number"
+          placeholder="Price / Unit"
+          [(ngModel)]="service.pricePerUnit"
+          (input)="recalculate()"
+        />
+
+        <input
+          type="number"
+          placeholder="Amount"
+          [value]="service.amountCharged"
+          disabled
+        />
+    
+        <input
+          type="text"
+          placeholder="Notes"
+          [(ngModel)]="service.notes"
+        />
+
+        <button
+          type="button"
+          class="remove-btn"
+          (click)="removeService(i)"
+        >
+          ✕
+        </button>
       </div>
-    </div>
-  </div>
 
-  <!-- Services Section -->
-  <div class="services-section">
-    <h3 class="section-title">Items List</h3>
-
-    <div class="service-row" *ngFor="let service of invoice.services; let i = index">
-      <select [(ngModel)]="service.serviceType">
-        <option value="">Select Service</option>
-        <option>Wedding Photography</option>
-        <option>Videography</option>
-        <option>Drone Shots</option>
-        <option>Album Design</option>
-        <option>Pre-Wedding Shoot</option>
-      </select>
-
-      <input
-        type="number"
-        placeholder="Enter Price"
-        [(ngModel)]="service.amountCharged"
-      />
-
-      <input
-        type="text"
-        placeholder="Notes"
-        [(ngModel)]="service.notes"
-      />
-
-      <button type="button" class="remove-btn" (click)="removeService(i)" title="Remove Service">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
+      <button
+        type="button"
+        class="add-item-btn"
+        (click)="addService()"
+      >
+        + Add Another Item
       </button>
     </div>
 
-    <button class="add-btn" type="button" (click)="addService()">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <path d="M10 5V15M5 10H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      Add More Service
-    </button>
+    <!-- Payment Section -->
+    <div class="payment-section">
+      <div class="row">
+        <label>Received Amount</label>
+        <input
+          type="number"
+          [(ngModel)]="invoice.receivedAmount"
+          (input)="recalculate()"
+        />
+      </div>
+
+      <div class="balance-box">
+        <span>Balance Amount</span>
+        <strong>₹ {{ invoice.balanceAmount | number:'1.0-0' }}</strong>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button class="btn-primary" (click)="saveInvoice()">Save Invoice</button>
+      <button class="btn-secondary" (click)="clearInvoice()">Clear</button>
+      <button class="btn-outline" (click)="goToList()">Invoice List</button>
+    </div>
+
   </div>
-
-  <!-- Calculate -->
-  <button class="calc-btn" type="button" (click)="calculateTotal()">
-    Calculate Total
-  </button>
-
-  <div class="total-box" *ngIf="invoice.totalAmount > 0">
-    <span class="total-label">Total Amount</span>
-    <span class="total-value">₹ {{ invoice.totalAmount | number:'1.0-0' }}</span>
-  </div>
-
-  <!-- Actions -->
-  <div class="action-buttons">
-    <button class="btn-primary" (click)="saveInvoice()">
-      <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-        <path d="M17 9V17H3V9M10 13V3M10 13L6 9M10 13L14 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      Save Invoice
-    </button>
-    
-    <button class="btn-secondary" (click)="clearInvoice()">
-      <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-        <path d="M17 3L3 17M3 3L17 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      Clear
-    </button>
-    
-    <button class="btn-outline" (click)="goToList()">
-      <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-        <path d="M3 4H17M3 10H17M3 16H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      Invoice List
-    </button>
-  </div>
-
 </div>

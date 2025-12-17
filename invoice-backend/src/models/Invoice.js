@@ -1,29 +1,32 @@
 const mongoose = require('mongoose');
 
-module.exports = mongoose.model(
-  'Invoice',
-  new mongoose.Schema(
-    {
-      userName: { type: String, required: true },
-      phoneNumber: { type: String },
-       // Array of service objects with individual pricing
-      services: [
-        {
-          serviceType: { type: String, required: true },
-          notes: { type: String },
-          amountCharged: { type: Number, required: true },
-          
-        }
-      ],
-       totalAmount: { type: Number },
+const serviceSchema = new mongoose.Schema({
+  serviceType: { type: String, required: true },
+  quantity: { type: Number, required: true },
+  pricePerUnit: { type: Number, required: true },
+  amountCharged: { type: Number, required: true },
+  notes: { type: String }
+});
 
-      ownerDetails: {
-        companyName: { type: String },
-        ownerName: { type: String },
-        phoneNumber: { type: String },
-        address: { type: String }
-      }
-    },
-    { timestamps: true }
-  )
+const invoiceSchema = new mongoose.Schema(
+  {
+    userName: { type: String, required: true },
+    phoneNumber: { type: String, required: true },
+
+    services: { type: [serviceSchema], required: true },
+
+    totalAmount: { type: Number, required: true },
+    receivedAmount: { type: Number, required: true },
+    balanceAmount: { type: Number, required: true },
+
+    ownerDetails: {
+      companyName: String,
+      ownerName: String,
+      phoneNumber: String,
+      address: String
+    }
+  },
+  { timestamps: true }
 );
+
+module.exports = mongoose.model('Invoice', invoiceSchema);

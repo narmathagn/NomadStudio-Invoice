@@ -19,12 +19,16 @@ export class CreateInvoice {
     services: [
       {
         serviceType: '',
+        quantity: 1,
+        pricePerUnit: 0,
         amountCharged: 0,
         notes: ''
       }
     ],
+    totalAmount: 0,
+    receivedAmount: 0,
+    balanceAmount: 0,
     generalNotes: '',
-    totalAmount: 0, // UI preview (backend recalculates)
     ownerDetails: {
       companyName: 'Nomad Studio Pvt Ltd',
       ownerName: 'Suriya',
@@ -41,6 +45,8 @@ export class CreateInvoice {
   addService() {
     this.invoice.services.push({
       serviceType: '',
+      quantity: 1,
+      pricePerUnit: 0,
       amountCharged: 0,
       notes: ''
     });
@@ -48,13 +54,25 @@ export class CreateInvoice {
 
   removeService(index: number) {
     this.invoice.services.splice(index, 1);
+    this.recalculate();
   }
 
-  calculateTotal() {
+  recalculate() {
+    // service-wise calculation
+    this.invoice.services.forEach(s => {
+      s.amountCharged =
+        (Number(s.quantity) || 0) * (Number(s.pricePerUnit) || 0);
+    });
+
+    // total
     this.invoice.totalAmount = this.invoice.services.reduce(
-      (sum, s) => sum + (Number(s.amountCharged) || 0),
+      (sum, s) => sum + s.amountCharged,
       0
     );
+
+    // balance
+    this.invoice.balanceAmount =
+      this.invoice.totalAmount - (Number(this.invoice.receivedAmount) || 0);
   }
 
   saveInvoice() {
@@ -67,20 +85,22 @@ export class CreateInvoice {
       });
   }
 
- 
-  buildWhatsappMessage() {
-    throw new Error('Method not implemented.');
-  }
-
-
   clearInvoice() {
     this.invoice.userName = '';
     this.invoice.phoneNumber = '';
     this.invoice.services = [
-      { serviceType: '', amountCharged: 0, notes: '' }
+      {
+        serviceType: '',
+        quantity: 1,
+        pricePerUnit: 0,
+        amountCharged: 0,
+        notes: ''
+      }
     ];
-    this.invoice.generalNotes = '';
     this.invoice.totalAmount = 0;
+    this.invoice.receivedAmount = 0;
+    this.invoice.balanceAmount = 0;
+    this.invoice.generalNotes = '';
   }
 
   goToList() {

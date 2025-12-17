@@ -3,30 +3,19 @@ const Invoice = require('../models/Invoice');
 // CREATE
 exports.createInvoice = async (req, res) => {
   try {
-    // Auto-calculate totalAmount from services
-    if (req.body.services && req.body.services.length > 0) {
-      req.body.totalAmount = req.body.services.reduce(
-        (sum, service) => sum + (service.amountCharged || 0), 
-        0
-      );
+    const invoice = req.body;
+
+    // minimal validation
+    if (!invoice.services || invoice.services.length === 0) {
+      return res.status(400).json({ message: 'Services required' });
     }
-    
-    const invoice = await Invoice.create(req.body);
-    res.json(invoice);
+
+    const savedInvoice = await Invoice.create(invoice);
+    res.status(201).json(savedInvoice);
+
   } catch (err) {
-    if (err.name === 'ZodError') {
-      return res.status(400).json({ 
-        message: 'Validation failed or Create Failed', 
-        errors: err.issues 
-      });
-    }
-    if (err.name === 'ValidationError') {
-      return res.status(400).json({ 
-        message: 'Validation failed', 
-        errors: err.message 
-      });
-    }
-    return res.status(500).json({ message: 'Server error' });
+    console.error(err);
+    res.status(500).json({ message: 'Failed to create invoice' });
   }
 };
 

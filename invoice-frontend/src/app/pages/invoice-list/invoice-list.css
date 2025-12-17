@@ -1,74 +1,119 @@
 .invoice-list-container {
-  padding: 24px;
-  background-color: #fafafa;
+  padding: 30px;
 }
 
 .page-title {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   color: #333;
 }
 
 .table-wrapper {
-  background: #ffffff;
-  border-radius: 8px;
   overflow-x: auto;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  background: #fff;
+  border-radius: 10px;
 }
 
 .invoice-table {
   width: 100%;
   border-collapse: collapse;
+}
+
+.invoice-table th,
+.invoice-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
   font-size: 14px;
 }
 
 .invoice-table thead {
-  background-color: #f4f4f4;
-}
-
-.invoice-table th {
-  text-align: left;
-  padding: 12px 14px;
-  font-weight: 600;
-  color: #555;
-  border-bottom: 1px solid #ddd;
-}
-
-.invoice-table td {
-  padding: 12px 14px;
-  border-bottom: 1px solid #eee;
-  color: #333;
-  vertical-align: top;
-}
-
-.invoice-table tbody tr:hover {
-  background-color: #f9f9f9;
+  background: #f5f6fa;
 }
 
 .client-name {
-  font-weight: 500;
-}
-
-.amount {
   font-weight: 600;
-  color: #222;
 }
 
 .service-list {
-  margin: 0;
   padding-left: 16px;
+  margin: 0;
 }
 
-.service-list li {
-  margin-bottom: 4px;
-  font-size: 13px;
-  color: #555;
+.amount,
+.received,
+.balance {
+  font-weight: 600;
+}
+
+.balance.negative {
+  color: #d63031;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.edit-btn {
+  background: #6f63d9;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: #ff6b6b;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pagination {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.pagination button {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  cursor: pointer;
 }
 
 .empty {
+  margin-top: 30px;
   text-align: center;
-  margin-top: 32px;
-  color: #888;
-  font-size: 14px;
+  color: #777;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.pagination button {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.bulk-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
 }
