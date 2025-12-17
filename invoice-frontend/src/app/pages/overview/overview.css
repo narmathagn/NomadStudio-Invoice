@@ -1,0 +1,55 @@
+.overview-container {
+  padding: 24px;
+}
+
+.page-title {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card .label {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.stat-card .value {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.stat-card.income {
+  border-left: 5px solid #6f63d9;
+}
+
+.stat-card.received {
+  border-left: 5px solid #28a745;
+}
+
+.stat-card.balance {
+  border-left: 5px solid #dc3545;
+}
+
+.loading {
+  padding: 40px;
+  text-align: center;
+  color: #666;
+}
+.error {
+  padding: 40px;
+  text-align: center;
+  color: #d63031;
+}

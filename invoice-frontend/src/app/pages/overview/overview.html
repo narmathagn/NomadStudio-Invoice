@@ -1,0 +1,33 @@
+<div class="overview-container">
+
+  <h2 class="page-title">Overview</h2>
+
+  <div *ngIf="loading" class="loading">
+    Loading dashboard...
+  </div>
+
+  <div class="stats-grid" *ngIf="!loading">
+
+    <div class="stat-card">
+      <p class="label">Total Clients</p>
+      <h3 class="value">{{ totalClients }}</h3>
+    </div>
+
+    <div class="stat-card income">
+      <p class="label">Total Income</p>
+      <h3 class="value">₹ {{ totalIncome | number:'1.0-0' }}</h3>
+    </div>
+
+    <div class="stat-card received">
+      <p class="label">Received Amount</p>
+      <h3 class="value">₹ {{ totalReceived | number:'1.0-0' }}</h3>
+    </div>
+
+    <div class="stat-card balance">
+      <p class="label">Balance Amount</p>
+      <h3 class="value">₹ {{ totalBalance | number:'1.0-0' }}</h3>
+    </div>
+
+  </div>
+
+</div>

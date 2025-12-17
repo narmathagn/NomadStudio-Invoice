@@ -32,7 +32,7 @@ export class Login {
       next: (res) => {
         localStorage.setItem('token', res.token);
         console.log('Response data:', res);
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/overview']);
       },
       error: () => {
         alert('Invalid password');

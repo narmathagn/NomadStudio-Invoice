@@ -10,22 +10,21 @@ import { CreateInvoice } from './pages/create-invoice/create-invoice';
 import { InvoiceList } from './pages/invoice-list/invoice-list';
 import { CreateClient } from './pages/create-client/create-client';
 import { Clients } from './pages/clients/clients';
+import { Overview } from './pages/overview/overview';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: Login },
   {
-    path: '',
-    component: MainLayout,
+    path: '',  component: MainLayout,
     children: [
       { path: 'dashboard', component: Dashboard },
-
       // add more pages here later
-      // { path: 'clients', component: ClientsComponent }
       { path: 'invoices', component: CreateInvoice },
       { path: 'listinvoices', component: InvoiceList },
       { path: 'addclient', component: CreateClient },
-      { path: 'clients', component: Clients }
+      { path: 'clients', component: Clients },
+      {path:'overview', component:Overview}
     ]
   },
 ];
