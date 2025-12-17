@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let client of clients">
+            <tr *ngFor="let client of paginatedClients">
                 <td *ngIf="editingClient?._id !== client._id">{{ client.userName }}</td>
                 <td *ngIf="editingClient?._id === client._id">
                     <input [(ngModel)]="editingClient.userName" />
@@ -44,6 +44,20 @@
             </tr>
         </tbody>
     </table>
+    <div class="pagination" *ngIf="totalPages > 1">
+  <button (click)="prevPage()" [disabled]="currentPage === 1">
+    Prev
+  </button>
+
+  <span>
+    Page {{ currentPage }} of {{ totalPages }}
+  </span>
+
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+    Next
+  </button>
+</div>
+
 
     <div *ngIf="!loading && clients.length === 0" class="no-clients">
         No clients found.

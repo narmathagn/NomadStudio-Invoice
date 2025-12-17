@@ -15,6 +15,12 @@ export class Clients {
   clients: any[] = [];
   loading = true;
   editingClient: any = null;
+  paginatedClients: any[] = [];
+
+pageSize = 1;
+currentPage = 1;
+totalPages = 1;
+
 
   constructor(private clientService: Client) {
 
@@ -29,6 +35,7 @@ export class Clients {
     this.clientService.getAllClients().subscribe({
       next: (data) => {
         this.clients = data;
+        this.setupPagination();
         this.loading = false;
       },
       error: (err) => {
@@ -37,6 +44,31 @@ export class Clients {
       }
     });
   }
+
+  setupPagination() {
+  this.totalPages = Math.ceil(this.clients.length / this.pageSize);
+  this.updatePage();
+}
+
+updatePage() {
+  const start = (this.currentPage - 1) * this.pageSize;
+  const end = start + this.pageSize;
+  this.paginatedClients = this.clients.slice(start, end);
+}
+
+nextPage() {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+    this.updatePage();
+  }
+}
+
+prevPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+    this.updatePage();
+  }
+}
 
   editClient(client: any) {
     this.editingClient = { ...client }; // clone object for editing
