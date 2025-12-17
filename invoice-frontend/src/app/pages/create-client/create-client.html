@@ -1,0 +1,28 @@
+<div class="form-wrapper">
+    <h2>Add New Client</h2>
+
+    <form #clientForm="ngForm" (ngSubmit)="saveClient()">
+
+        <label>Name *</label>
+        <input type="text" name="userName" [(ngModel)]="client.userName" placeholder="Enter client name" required />
+
+        <label>Phone Number</label>
+        <input type="tel" name="phoneNumber" [(ngModel)]="client.phoneNumber" placeholder="Enter phone number" />
+
+        <label>Email</label>
+        <input type="email" name="emailId" [(ngModel)]="client.emailId" placeholder="Enter email address" />
+
+        <label>Address</label>
+        <textarea name="address" [(ngModel)]="client.address" placeholder="Enter address"></textarea>
+
+        <!-- Buttons side by side -->
+        <div class="button-row">
+            <button type="submit" [disabled]="clientForm.invalid || loading">
+                {{ loading ? 'Saving...' : 'Add Client' }}
+            </button>
+            <button type="button" class="secondary" (click)="viewAllClients()">
+                View All Clients
+            </button>
+        </div>
+    </form>
+</div>

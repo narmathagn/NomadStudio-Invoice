@@ -1,0 +1,107 @@
+/* Form Container */
+.form-wrapper {
+    max-width: 500px;
+    margin: 40px auto 20px;
+    /* reduced vertical centering (top margin 40px, bottom 20px) */
+    padding: 30px 25px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Each form row */
+.form-wrapper .row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+/* Labels */
+.form-wrapper label {
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #333;
+    font-size: 14px;
+}
+
+/* Inputs and Textarea */
+.form-wrapper input,
+.form-wrapper textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+/* Focus effect */
+.form-wrapper input:focus,
+.form-wrapper textarea:focus {
+    outline: none;
+    border-color: #6b4226;
+    box-shadow: 0 0 5px rgba(107, 66, 38, 0.3);
+}
+
+/* Textarea resize & min height */
+.form-wrapper textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Button row container */
+.form-wrapper .button-row {
+    display: flex;
+    gap: 10px;
+    /* space between buttons */
+    margin-top: 15px;
+}
+
+/* Buttons */
+.form-wrapper button {
+    flex: 1;
+    /* buttons take equal width */
+    padding: 12px;
+    background-color: #6b4226;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Button hover */
+.form-wrapper button:hover {
+    background-color: #52311d;
+}
+
+/* Disabled button */
+.form-wrapper button:disabled {
+    background-color: #bfa48d;
+    cursor: not-allowed;
+}
+
+/* Secondary button */
+.form-wrapper button.secondary {
+    background-color: #ccc;
+    color: #333;
+}
+
+.form-wrapper button.secondary:hover {
+    background-color: #b3b3b3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .form-wrapper {
+        padding: 20px 15px;
+    }
+
+    .form-wrapper .button-row {
+        flex-direction: column;
+        /* stack buttons on small screens */
+    }
+}

@@ -1,0 +1,51 @@
+<div class="clients-wrapper">
+    <h2>All Clients</h2>
+
+    <div *ngIf="loading">Loading clients...</div>
+
+    <table *ngIf="!loading && clients.length > 0">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let client of clients">
+                <td *ngIf="editingClient?._id !== client._id">{{ client.userName }}</td>
+                <td *ngIf="editingClient?._id === client._id">
+                    <input [(ngModel)]="editingClient.userName" />
+                </td>
+
+                <td *ngIf="editingClient?._id !== client._id">{{ client.phoneNumber }}</td>
+                <td *ngIf="editingClient?._id === client._id">
+                    <input [(ngModel)]="editingClient.phoneNumber" />
+                </td>
+
+                <td *ngIf="editingClient?._id !== client._id">{{ client.emailId }}</td>
+                <td *ngIf="editingClient?._id === client._id">
+                    <input [(ngModel)]="editingClient.emailId" />
+                </td>
+
+                <td *ngIf="editingClient?._id !== client._id">{{ client.address }}</td>
+                <td *ngIf="editingClient?._id === client._id">
+                    <input [(ngModel)]="editingClient.address" />
+                </td>
+
+                <td>
+                    <button *ngIf="editingClient?._id !== client._id" (click)="editClient(client)">Edit</button>
+                    <button *ngIf="editingClient?._id === client._id" (click)="saveEdit()">Save</button>
+                    <button *ngIf="editingClient?._id === client._id" (click)="cancelEdit()">Cancel</button>
+                    <button (click)="deleteClient(client._id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div *ngIf="!loading && clients.length === 0" class="no-clients">
+        No clients found.
+    </div>
+</div>

@@ -1,0 +1,133 @@
+/* Container for the clients page */
+.clients-wrapper {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 25px 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Page title */
+.clients-wrapper h2 {
+    margin-bottom: 20px;
+    color: #6b4226;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Table styling */
+.clients-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* Table header */
+.clients-wrapper th {
+    background-color: #6b4226;
+    color: #fff;
+    padding: 12px 10px;
+    text-align: left;
+    border-radius: 6px 6px 0 0;
+}
+
+/* Table cells */
+.clients-wrapper td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Hover effect for rows */
+.clients-wrapper tbody tr:hover {
+    background-color: #f5f5f5;
+    transition: background-color 0.2s ease;
+}
+
+/* No clients message */
+.clients-wrapper .no-clients {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+    font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .clients-wrapper {
+        padding: 20px 15px;
+    }
+
+    .clients-wrapper table {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .clients-wrapper table,
+    .clients-wrapper thead,
+    .clients-wrapper tbody,
+    .clients-wrapper th,
+    .clients-wrapper td,
+    .clients-wrapper tr {
+        display: block;
+        width: 100%;
+    }
+
+    .clients-wrapper th {
+        display: none;
+    }
+
+    .clients-wrapper td {
+        padding: 10px;
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+    }
+
+    .clients-wrapper td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        font-weight: 600;
+        color: #333;
+    }
+}
+
+.clients-wrapper table button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    font-size: 13px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.clients-wrapper table button:hover {
+    opacity: 0.8;
+}
+
+.clients-wrapper table button:nth-child(1) {
+    background-color: #f0ad4e;
+    color: #fff;
+}
+
+/* Edit */
+.clients-wrapper table button:nth-child(2) {
+    background-color: #5cb85c;
+    color: #fff;
+}
+
+/* Save */
+.clients-wrapper table button:nth-child(3) {
+    background-color: #d9534f;
+    color: #fff;
+}
+
+/* Cancel/Delete */
