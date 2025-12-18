@@ -3,7 +3,11 @@
 
     <div *ngIf="loading">Loading clients...</div>
 
-    <table *ngIf="!loading && clients.length > 0">
+    <input type="text" placeholder="Search by name or phone" [(ngModel)]="searchTerm" (ngModelChange)="applyFilter()" />
+
+
+
+    <table *ngIf="!loading && filteredClients.length > 0">
         <thead>
             <tr>
                 <th>Name</th>
@@ -45,21 +49,22 @@
         </tbody>
     </table>
     <div class="pagination" *ngIf="totalPages > 1">
-  <button (click)="prevPage()" [disabled]="currentPage === 1">
-    Prev
-  </button>
+        <button (click)="prevPage()" [disabled]="currentPage === 1">
+            Prev
+        </button>
 
-  <span>
-    Page {{ currentPage }} of {{ totalPages }}
-  </span>
+        <span>
+            Page {{ currentPage }} of {{ totalPages }}
+        </span>
 
-  <button (click)="nextPage()" [disabled]="currentPage === totalPages">
-    Next
-  </button>
-</div>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+            Next
+        </button>
+    </div>
 
 
-    <div *ngIf="!loading && clients.length === 0" class="no-clients">
+    <div *ngIf="!loading && filteredClients.length === 0" class="no-clients">
         No clients found.
     </div>
+
 </div>

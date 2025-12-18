@@ -16,10 +16,13 @@ export class Clients {
   loading = true;
   editingClient: any = null;
   paginatedClients: any[] = [];
+  searchTerm = '';
+  filteredClients: any[] = [];
 
-pageSize = 1;
-currentPage = 1;
-totalPages = 1;
+
+  pageSize = 5;
+  currentPage = 1;
+  totalPages = 1;
 
 
   constructor(private clientService: Client) {
@@ -35,6 +38,7 @@ totalPages = 1;
     this.clientService.getAllClients().subscribe({
       next: (data) => {
         this.clients = data;
+        this.filteredClients = [...data]; // ✅
         this.setupPagination();
         this.loading = false;
       },
@@ -45,30 +49,53 @@ totalPages = 1;
     });
   }
 
+
   setupPagination() {
-  this.totalPages = Math.ceil(this.clients.length / this.pageSize);
-  this.updatePage();
-}
-
-updatePage() {
-  const start = (this.currentPage - 1) * this.pageSize;
-  const end = start + this.pageSize;
-  this.paginatedClients = this.clients.slice(start, end);
-}
-
-nextPage() {
-  if (this.currentPage < this.totalPages) {
-    this.currentPage++;
+    this.totalPages = Math.ceil(this.filteredClients.length / this.pageSize);
+    this.currentPage = 1;
     this.updatePage();
   }
-}
 
-prevPage() {
-  if (this.currentPage > 1) {
-    this.currentPage--;
-    this.updatePage();
+  applyFilter() {
+    const term = this.searchTerm?.trim().toLowerCase();
+
+    if (!term) {
+      this.filteredClients = [...this.clients];
+    } else {
+      this.filteredClients = this.clients.filter(client =>
+        (client.userName && client.userName.toLowerCase().includes(term)) ||
+        (client.phoneNumber && client.phoneNumber.toString().includes(term))
+      );
+
+    }
+
+    this.currentPage = 1;
+    this.setupPagination();
+    console.log('Search:', this.searchTerm);
+    console.log('Filtered:', this.filteredClients.length);
   }
-}
+
+
+
+  updatePage() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.paginatedClients = this.filteredClients.slice(start, end);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePage();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePage();
+    }
+  }
 
   editClient(client: any) {
     this.editingClient = { ...client }; // clone object for editing

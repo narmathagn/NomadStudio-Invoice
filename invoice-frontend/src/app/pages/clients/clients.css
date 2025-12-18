@@ -55,6 +55,18 @@
     font-style: italic;
 }
 
+.search-box {
+    margin-bottom: 15px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .clients-wrapper {
@@ -131,3 +143,35 @@
 }
 
 /* Cancel/Delete */
+
+/* Search input container spacing */
+.clients-wrapper input[type="text"] {
+    width: 100%;
+    max-width: 350px;
+    padding: 10px 14px;
+    margin: 15px 0 20px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+/* Focus effect */
+.clients-wrapper input[type="text"]:focus {
+    border-color: #6b4226;
+    box-shadow: 0 0 6px rgba(107, 66, 38, 0.25);
+}
+
+/* Placeholder styling */
+.clients-wrapper input[type="text"]::placeholder {
+    color: #999;
+    font-size: 13px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .clients-wrapper input[type="text"] {
+        max-width: 100%;
+    }
+}

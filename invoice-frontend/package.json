@@ -33,6 +33,7 @@
     "@angular/router": "^20.3.0",
     "@angular/ssr": "^20.3.13",
     "express": "^5.1.0",
+    "html2pdf.js": "^0.12.1",
     "ngx-toaster": "^1.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
