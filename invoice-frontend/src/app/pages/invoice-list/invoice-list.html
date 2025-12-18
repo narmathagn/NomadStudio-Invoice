@@ -1,165 +1,54 @@
 <div class="invoice-list-container">
-
   <h2 class="page-title">Invoice List</h2>
 
-<!-- ✅ Bulk Actions (NEW, checkbox-based only) -->
+  <input class="invoice-search" placeholder="Search by name or phone" [(ngModel)]="searchTerm"
+    (ngModelChange)="applyFilter()" />
+
   <div class="bulk-actions" *ngIf="selectedCount > 0">
-
-    <!-- Single selection -->
-    <button
-      *ngIf="selectedCount === 1"
-      class="btn-primary"
-      (click)="generatePdf()"
-    >
-      Generate PDF
-    </button>
-
-    <!-- Multiple selection -->
-    <button
-      *ngIf="selectedCount > 1"
-      class="btn-outline"
-      (click)="exportCsv()"
-    >
-      Export CSV
-    </button>
-
+    <button class="btn-primary" *ngIf="selectedCount === 1" (click)="openPreview()">View Invoice</button>
+    <button class="btn-primary" *ngIf="selectedCount > 1" (click)="exportCsv()">Export CSV</button>
   </div>
-
 
   <div class="table-wrapper">
     <table class="invoice-table">
       <thead>
         <tr>
-          <!-- ✅ Checkbox header -->
-          <th>
-            <input
-              type="checkbox"
-              (change)="toggleSelectAll($event)"
-            />
-          </th>
-
-          <th>SI.NO</th>
-          <th>Client Name</th>
+          <th><input type="checkbox" (change)="toggleSelectAll($event)" /></th>
+          <th>#</th>
+          <th>Client</th>
           <th>Phone</th>
           <th>Total</th>
-          <th>Received</th>
           <th>Balance</th>
           <th>Date</th>
-          <th>Actions</th>
         </tr>
       </thead>
-
       <tbody>
-        <tr *ngFor="let invoice of paginatedInvoices; let i = index">
-
-          <!-- ✅ Checkbox row -->
-          <td>
-            <input
-              type="checkbox"
-              [(ngModel)]="invoice.selected"
-              (change)="onSelectionChange()"
-            />
-          </td>
-
-          <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
-
-          <!-- Client -->
-          <td>
-            <input
-              *ngIf="editingId === invoice._id"
-              [(ngModel)]="invoice.userName"
-            />
-            <span *ngIf="editingId !== invoice._id">
-              {{ invoice.userName }}
-            </span>
-          </td>
-
-          <!-- Phone -->
-          <td>
-            <input
-              *ngIf="editingId === invoice._id"
-              [(ngModel)]="invoice.phoneNumber"
-            />
-            <span *ngIf="editingId !== invoice._id">
-              {{ invoice.phoneNumber }}
-            </span>
-          </td>
-
-          <!-- Total -->
-          <td>₹ {{ invoice.totalAmount }}</td>
-
-          <!-- Received -->
-          <td>
-            <input
-              *ngIf="editingId === invoice._id"
-              type="number"
-              [(ngModel)]="invoice.receivedAmount"
-              (input)="recalculateBalance(invoice)"
-            />
-            <span *ngIf="editingId !== invoice._id">
-              ₹ {{ invoice.receivedAmount }}
-            </span>
-          </td>
-
-          <!-- Balance -->
-          <td>
-            ₹ {{ invoice.balanceAmount }}
-          </td>
-
-          <!-- Date -->
-          <td>{{ invoice.createdAt | date:'dd MMM yyyy' }}</td>
-
-          <!-- Actions -->
-          <td class="actions">
-
-            <!-- NORMAL MODE -->
-            <ng-container *ngIf="editingId !== invoice._id">
-              <button class="edit-btn" (click)="startEdit(invoice)">
-                Edit
-              </button>
-
-              <button class="delete-btn" (click)="deleteInvoice(invoice._id)">
-                Delete
-              </button>
-            </ng-container>
-
-            <!-- EDIT MODE -->
-            <ng-container *ngIf="editingId === invoice._id">
-              <button class="save-btn" (click)="updateInvoice(invoice)">
-                Update
-              </button>
-
-              <button class="cancel-btn" (click)="cancelEdit()">
-                Cancel
-              </button>
-            </ng-container>
-
-          </td>
+        <tr *ngFor="let inv of paginatedInvoices; let i = index">
+          <td><input type="checkbox" [(ngModel)]="inv.selected" (change)="onSelectionChange()" /></td>
+          <td>{{ i + 1 }}</td>
+          <td>{{ inv.userName }}</td>
+          <td>{{ inv.phoneNumber }}</td>
+          <td>₹ {{ inv.totalAmount }}</td>
+          <td>₹ {{ inv.balanceAmount }}</td>
+          <td>{{ inv.createdAt | date:'dd MMM yyyy' }}</td>
         </tr>
       </tbody>
     </table>
   </div>
+</div>
 
-  <!-- ✅ Pagination (unchanged, just shown here for context) -->
-  <div class="pagination" *ngIf="totalPages > 1">
-    <button
-      (click)="prevPage()"
-      [disabled]="currentPage === 1"
-    >
-      Prev
-    </button>
-
-    <span>
-      Page {{ currentPage }} of {{ totalPages }}
-    </span>
-
-    <button
-      (click)="nextPage()"
-      [disabled]="currentPage === totalPages"
-    >
-      Next
-    </button>
+<!-- ================= PREVIEW MODAL ================= -->
+<div class="modal-backdrop" *ngIf="showPreview">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Invoice Preview</h3>
+      <div class="modal-actions">
+        <button class="btn-primary" (click)="downloadPdf()">Download PDF</button>
+        <button class="btn-outline" (click)="closePreview()">Close</button>
+      </div>
+    </div>
+    <div id="invoice-pdf" class="invoice-pdf">
+      <app-invoice-template [invoice]="selectedInvoice"></app-invoice-template>
+    </div>
   </div>
-
-  
 </div>
