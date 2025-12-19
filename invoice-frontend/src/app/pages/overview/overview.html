@@ -1,33 +1,71 @@
 <div class="overview-container">
 
-  <h2 class="page-title">Overview</h2>
+  <div class="header-row">
+    <h2 class="page-title">Overview</h2>
+     <select [(ngModel)]="selectedFilter" (change)="applyPresetFilter()">
+      <option value="today">Today</option>
+      <option value="week">This Week</option>
+      <option value="month">This Month</option>
+      <option value="year">This Year</option>
+    </select>
+    
+    <small class="hint">
+  Showing data for: {{ selectedFilter | titlecase }}
+</small>
+    <input
+      type="date"
+      [(ngModel)]="fromDate"
+      (change)="applyCustomDateFilter()"
+    />
 
-  <div *ngIf="loading" class="loading">
-    Loading dashboard...
+    <span class="to-text">to</span>
+
+    <input
+      type="date"
+      [(ngModel)]="toDate"
+      (change)="applyCustomDateFilter()"
+    />
+
   </div>
 
-  <div class="stats-grid" *ngIf="!loading">
+  <div *ngIf="loading">Loading dashboard…</div>
 
+  <div class="stats-grid" *ngIf="!loading">
     <div class="stat-card">
-      <p class="label">Total Clients</p>
-      <h3 class="value">{{ totalClients }}</h3>
+      <p>Total Clients</p>
+      <h3>{{ totalClients }}</h3>
     </div>
 
     <div class="stat-card income">
-      <p class="label">Total Income</p>
-      <h3 class="value">₹ {{ totalIncome | number:'1.0-0' }}</h3>
+      <p>Total Income</p>
+      <h3>₹ {{ totalIncome }}</h3>
     </div>
 
     <div class="stat-card received">
-      <p class="label">Received Amount</p>
-      <h3 class="value">₹ {{ totalReceived | number:'1.0-0' }}</h3>
+      <p>Received</p>
+      <h3>₹ {{ totalReceived }}</h3>
     </div>
 
     <div class="stat-card balance">
-      <p class="label">Balance Amount</p>
-      <h3 class="value">₹ {{ totalBalance | number:'1.0-0' }}</h3>
+      <p>Balance</p>
+      <h3>₹ {{ totalBalance }}</h3>
+    </div>
+  </div>
+
+  <div class="overview-bottom" *ngIf="!loading">
+    <div class="chart-card">
+      <h4>Income vs Expense</h4>
+      <canvas #incomeChart></canvas>
     </div>
 
+    <div class="expense-card">
+      <h4>Add Expense</h4>
+
+      <input type="number" placeholder="Expense Amount" [(ngModel)]="expenseAmount" />
+      <input type="text" placeholder="Reason" [(ngModel)]="expenseReason" />
+
+      <button>Add</button>
+    </div>
   </div>
 
 </div>
