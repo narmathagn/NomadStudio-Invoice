@@ -1,0 +1,114 @@
+/* Page container */
+.expense-container {
+  padding: 24px;
+  background: #f4f6fb;
+  min-height: 100vh;
+}
+
+/* Title */
+.page-title {
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Loading & Empty */
+.loading,
+.empty {
+  padding: 40px;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Table wrapper */
+.expense-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* Header */
+.expense-table thead {
+  background: linear-gradient(135deg, #6f63d9, #7f76e8);
+}
+
+.expense-table thead th {
+  padding: 14px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+/* Body cells */
+.expense-table tbody td {
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Row separation */
+.expense-table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Hover effect */
+.expense-table tbody tr:hover {
+  background: #f9f9ff;
+}
+
+/* Amount styling */
+.amount {
+  font-weight: 700;
+  color: #d63031;
+}
+
+/* First column (ID) */
+.expense-table td:first-child {
+  font-weight: 600;
+  color: #555;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .expense-table thead {
+    display: none;
+  }
+
+  .expense-table,
+  .expense-table tbody,
+  .expense-table tr,
+  .expense-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .expense-table tr {
+    margin-bottom: 16px;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  .expense-table td {
+    padding: 12px;
+    text-align: right;
+    position: relative;
+  }
+
+  .expense-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 12px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+}

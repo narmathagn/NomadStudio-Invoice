@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, viewChild } from '@angular/core';
 import { Invoice } from '../service/invoice';
 import { CommonModule } from '@angular/common';
 import { Client } from '../service/client';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { FormsModule } from '@angular/forms';
+import { error } from 'node:console';
+import { Expense } from '../service/expense';
+import {Chart, ChartConfiguration, registerables} from 'chart.js/auto';
 
 @Component({
   selector: 'app-overview',
@@ -23,9 +26,14 @@ export class Overview implements OnInit {
   expenseAmount: number = 0;
 expenseReason: string = '';
 
+@ViewChild('incomeChart') incomeChartRef!: ElementRef<HTMLCanvasElement>;
+chart: Chart | null = null;
+allExpenses: any[] = [];
+
   constructor(
     private invoiceService: Invoice,
-    private clientService: Client
+    private clientService: Client,
+    private expenseService: Expense
   ) {}
 
   // ================= NEW (FILTER SUPPORT) =================
@@ -40,6 +48,7 @@ expenseReason: string = '';
   ngOnInit(): void {
     this.loadDashboardData();
   }
+  
 
   // ================= EXISTING METHOD (UNCHANGED LOGIC) =================
   async loadDashboardData() {
@@ -48,6 +57,10 @@ expenseReason: string = '';
       const clients: any[] = await firstValueFrom(
         this.clientService.getAllClients()
       );
+      const expense: any[] = await firstValueFrom(
+        this.expenseService.getExpenses() 
+      );
+      this.allExpenses = expense;
 
       // Invoices (Promise)
       const invoices: any[] = await this.invoiceService.getInvoices();
@@ -99,6 +112,7 @@ expenseReason: string = '';
     this.filterInvoicesByDateRange(startDate, now);
   }
 
+  
   // ================= CUSTOM DATE FILTER (CALENDAR) =================
   applyCustomDateFilter() {
     if (!this.fromDate || !this.toDate) return;
@@ -110,7 +124,85 @@ expenseReason: string = '';
     to.setHours(23, 59, 59, 999);
 
     this.filterInvoicesByDateRange(from, to);
+    this.updateChart();
   }
+
+  updateChart() {
+    const labels: string[] = [];
+  const incomeData: number[] = [];
+  const expenseData: number[] = [];
+
+  const groupedIncome = this.groupByPeriod(this.allInvoices);
+  const groupedExpense = this.groupByPeriod(this.allExpenses);
+
+  Object.keys(groupedIncome).forEach(key => {
+    labels.push(key);
+    incomeData.push(groupedIncome[key] || 0);
+    expenseData.push(groupedExpense[key] || 0);
+  });
+
+  this.renderChart(labels, incomeData, expenseData);
+}
+renderChart(labels: string[], income: number[], expense: number[]) {
+  if (this.chart) {
+    this.chart.destroy();
+  }
+
+  const ctx = this.incomeChartRef.nativeElement.getContext('2d');
+  if (!ctx) return;
+
+  this.chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Income',
+          data: income,
+          borderColor: '#6f63d9',
+          backgroundColor: 'rgba(111,99,217,0.2)',
+          tension: 0.3
+        },
+        {
+          label: 'Expense',
+          data: expense,
+          borderColor: '#dc3545',
+          backgroundColor: 'rgba(220,53,69,0.2)',
+          tension: 0.3
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top' }
+      }
+    }
+  });
+}
+
+groupByPeriod(data: any[]) {
+  const result: Record<string, number> = {};
+
+  data.forEach(item => {
+    const date = new Date(item.createdAt);
+    let key = '';
+
+    if (this.selectedFilter === 'year') {
+      key = date.toLocaleString('default', { month: 'short' });
+    } else {
+      key = date.toLocaleDateString();
+    }
+
+    const amount =
+      item.totalAmount || item.amount || 0;
+
+    result[key] = (result[key] || 0) + amount;
+  });
+
+  return result;
+}
+
 
   // ================= DATE HELPERS (ADDED) =================
 getStartOfWeek(date: Date): Date {
@@ -148,4 +240,31 @@ getStartOfFinancialYear(date: Date): Date {
       0
     );
   }
+
+   addExpense() {
+    console.log('Adding expense:', this.expenseAmount, this.expenseReason);
+    if (!this.expenseAmount || this.expenseAmount <= 0) {
+      alert('Please enter a valid expense amount.');
+      return;
+    }
+    const playload ={
+      amount:this.expenseAmount,
+      reason:this.expenseReason
+    };
+
+    this.expenseService.addExpense(playload).subscribe({
+      next: () =>{
+        alert('Expense added successfully.');
+        this.expenseAmount = 0;
+        this.expenseReason = '';
+
+        this.loadDashboardData();     
+      },
+      error: (err) =>{
+        console.error('Failed to add expense', err);
+        alert('Failed to add expense. Please try again.');
+      }
+    });
+
+}
 }

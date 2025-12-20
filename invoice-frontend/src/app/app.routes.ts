@@ -12,6 +12,7 @@ import { CreateClient } from './pages/create-client/create-client';
 import { Clients } from './pages/clients/clients';
 import { Overview } from './pages/overview/overview';
 import { authGuard } from './guards/auth.guard';
+import { ExpenseList } from './pages/expense-list/expense-list';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -25,7 +26,8 @@ export const routes: Routes = [
       { path: 'listinvoices', component: InvoiceList , canActivate: [authGuard]   },
       { path: 'addclient', component: CreateClient , canActivate: [authGuard] },
       { path: 'clients', component: Clients , canActivate: [authGuard] },
-      {path:'overview', component:Overview, canActivate: [authGuard]}
+      {path:'overview', component:Overview, canActivate: [authGuard]},
+      {path:'expense', component:ExpenseList, canActivate: [authGuard]}
     ]
   },
 ];
