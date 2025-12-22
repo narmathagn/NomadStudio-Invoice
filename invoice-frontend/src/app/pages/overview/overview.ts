@@ -75,6 +75,7 @@ export class Overview implements OnInit {
 
       this.allInvoices = invoices; // backup
       this.allClients = clients;   // backup
+      this.totalClients=clients.length;
 
 
       this.loading = false;
@@ -353,14 +354,7 @@ export class Overview implements OnInit {
       0
     );
 
-    // 2. Filter Clients
-    const filteredClients = this.allClients.filter((client: any) => {
-      // Assuming client has createdAt or similar. If not, fallback to all.
-      if (!client.createdAt) return true;
-      const created = new Date(client.createdAt);
-      return created >= from && created <= to;
-    });
-    this.totalClients = filteredClients.length;
+  
   }
 
   addExpense() {
