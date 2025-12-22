@@ -102,3 +102,20 @@ button {
 button:hover {
   background-color: #555;
 }
+
+.link-group {
+  margin-top: 20px;
+}
+
+.link-group a {
+  color: #666;
+  text-decoration: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.link-group a:hover {
+  color: #333;
+  text-decoration: underline;
+}
