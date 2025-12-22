@@ -33,7 +33,7 @@ export class CreateInvoice {
     ownerDetails: {
       companyName: 'Nomad Studio Pvt Ltd',
       ownerName: 'Suriya',
-      phoneNumber: '9999999999',
+      phoneNumber: '+91 1234567890',
       address: 'Dharapuram Road, Oddanchatram-624619, Tamil Nadu',
     }
   };

@@ -80,6 +80,9 @@ export class InvoiceList implements OnInit {
       this.updatePage();
     }
   }
+  printInvoice(){
+    window.print();
+  }
 
   prevPage() {
     if (this.currentPage > 1) {
