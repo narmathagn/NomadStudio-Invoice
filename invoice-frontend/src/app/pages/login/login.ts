@@ -13,7 +13,11 @@ import { Router } from '@angular/router';
 export class Login {
   userName = 'NomadStudio';
   password = '';
+  emailId = '';
+  otp = '';
+  newPassword = '';
   showError = false;
+  mode: 'login' | 'forgot' | 'reset' = 'login';
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -38,5 +42,48 @@ export class Login {
         alert('Invalid password or Server Error');
       }
     });
+  }
+
+  forgotPassword() {
+    if (!this.emailId) {
+      alert('Please enter your email address');
+      return;
+    }
+    this.http.post<any>('http://localhost:5000/auth/forgot-password', {
+      emailId: this.emailId
+    }).subscribe({
+      next: (res) => {
+        alert(res.message);
+        this.mode = 'reset';
+      },
+      error: (err) => {
+        alert(err.error?.message || 'Failed to send OTP');
+      }
+    });
+  }
+
+  resetPassword() {
+    if (!this.emailId || !this.otp || !this.newPassword) {
+      alert('Please fill in all fields');
+      return;
+    }
+    this.http.post<any>('http://localhost:5000/auth/reset-password', {
+      emailId: this.emailId,
+      otp: this.otp,
+      newPassword: this.newPassword
+    }).subscribe({
+      next: (res) => {
+        alert(res.message);
+        this.mode = 'login';
+      },
+      error: (err) => {
+        alert(err.error?.message || 'Reset failed');
+      }
+    });
+  }
+
+  changeMode(newMode: 'login' | 'forgot' | 'reset') {
+    this.mode = newMode;
+    this.showError = false;
   }
 }
